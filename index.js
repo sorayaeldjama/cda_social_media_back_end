@@ -7,8 +7,9 @@ import postRoutes from "./routes/posts.js"
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import multer from "multer";
-
-
+import relationshipRoutes from "./routes/relationships.js";
+import updateRoutes from "./routes/users.js";
+import getAllUsersExceptCurrentRoutes from"./routes/users.js"
 const app = express();
 
 
@@ -40,7 +41,7 @@ app.use(
     const file = req.file;
     res.status(200).json(file.filename);
   });
-  
+
   app.use(cookieParser());
   
 
@@ -49,6 +50,12 @@ app.use("/api/posts",postRoutes)
 app.use("/api/comments",commentRoutes)
 app.use("/api/likes",likeRoutes)
 app.use("/api/auth",authRoutes)
+app.use("/api/relationships", relationshipRoutes);
+app.use("/api/update", updateRoutes);
+app.use("/api/allUsers", getAllUsersExceptCurrentRoutes);
+
+
+
 
 app.listen(8900,()=>{
     console.log("API working");

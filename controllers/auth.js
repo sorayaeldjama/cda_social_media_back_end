@@ -11,9 +11,9 @@ export const register = (req, res) => {
     db.query(q, [req.body.username], (err, data) => {
         console.log("requete",req.body)
       if (err) return res.status(500).json(err);
-      if (data.length) return res.status(409).json("User already exists!");
-      //CREATE A NEW USER
-      //Hash the password
+      if (data.length) return res.status(409).json("Cet utilisateur existe deja!");
+      //Creer un nouveau utilisateur
+      //Hasher le mot de passe
       const salt = bcrypt.genSaltSync(10);
       const hashedPassword = bcrypt.hashSync(req.body.password, salt);
       const q =
@@ -37,7 +37,7 @@ export const login= (req,res)=>{
 
     db.query(q, [req.body.username], (err, data) =>{
         if (err) return res.status(500).json(err);
-        if (data.length === 0) return res.status(404).json("User not found!");
+        if (data.length === 0) return res.status(404).json("Cet utilisateur n'existe pas!");
     
         const checkPassword = bcrypt.compareSync(
           req.body.password,
