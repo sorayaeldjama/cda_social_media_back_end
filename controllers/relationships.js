@@ -1,14 +1,22 @@
-import { db } from "../connect.js";
+import { db } from "../connect.js"; // Assurez-vous que le chemin d'accès est correct
 import jwt from "jsonwebtoken";
 
-export const getRelationships = (req,res)=>{
-    const q = "SELECT followerUserId FROM relationships WHERE followedUserId = ?";
+// Route pour récupérer les utilisateurs qui suivent un utilisateur donné
+export const getRelationships = (req, res) => {
+  const userId = req.query.userId; // Assurez-vous que l'ID de l'utilisateur est bien passé
+  console.log("userId pour getRelationships :", userId);
+  
+  const q = "SELECT followedUserId FROM relationships WHERE followerUserId = ?";
+  db.query(q, [userId], (err, data) => {
+    if (err) {
+      console.error('Erreur lors de la récupération des relations:', err);
+      return res.status(500).json(err);
+    }
+    console.log('Données récupérées:', data);
+    return res.status(200).json(data.map(relationship => relationship.followedUserId));
+  });
+};
 
-    db.query(q, [req.query.followedUserId], (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.status(200).json(data.map(relationship=>relationship.followerUserId));
-    });
-}
 
 export const addRelationship = (req, res) => {
   const token = req.cookies.accessToken;
@@ -30,8 +38,8 @@ export const addRelationship = (req, res) => {
   });
 };
 
+// Route pour supprimer une relation de suivi
 export const deleteRelationship = (req, res) => {
-
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
 
@@ -39,9 +47,13 @@ export const deleteRelationship = (req, res) => {
     if (err) return res.status(403).json("Token is not valid!");
 
     const q = "DELETE FROM relationships WHERE `followerUserId` = ? AND `followedUserId` = ?";
+    const userId = req.query.userId;
 
-    db.query(q, [userInfo.id, req.query.userId], (err, data) => {
-      if (err) return res.status(500).json(err);
+    db.query(q, [userInfo.id, userId], (err, data) => {
+      if (err) {
+        console.error('Erreur lors de la suppression de la relation:', err);
+        return res.status(500).json(err);
+      }
       return res.status(200).json("Unfollow");
     });
   });
