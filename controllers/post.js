@@ -7,6 +7,7 @@ export const getPosts = (req, res) => {
 
   const userId = req.query.userId;
   const token = req.cookies.accessToken;
+  console.log("token ",token)
 console.log("userId",userId)
   // Si le token n'existe pas, alors on n'est pas connecté
   if (!token) {

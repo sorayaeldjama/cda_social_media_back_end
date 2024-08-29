@@ -12,7 +12,6 @@ import updateRoutes from "./routes/users.js";
 import getAllUsersExceptCurrentRoutes from"./routes/users.js"
 const app = express();
 
-
 //middlewares
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true);
@@ -28,7 +27,7 @@ app.use(
   
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "../client/public/upload");
+      cb(null, "../front/public/upload");
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + file.originalname);

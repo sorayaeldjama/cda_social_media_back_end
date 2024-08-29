@@ -15,22 +15,26 @@ export const getUser = (req, res) => {
   
   export const updateUser = (req, res) => {
     const token = req.cookies.accessToken; 
-  if (!token) return res.status(401).json("Not authenticated!");
-    jwt.verify(token,"secretkey",(err,userInfo)=>{
-      if(err) return res.status(403).json("Token is not valid : ");
-      const q ="UPDATE users SET `name`=?, `city`=? ,`website`=? ,`profilePicture`=? ,`coverPicture`=? WHERE id=?"
-      db.query(q,[req.body.name,
+    if (!token) return res.status(401).json("Non authentifié!");
+  
+    jwt.verify(token, "secretkey", (err, userInfo) => {
+      if (err) return res.status(403).json("Token invalide!");
+  
+      const q = "UPDATE users SET `name`=?, `city`=? ,`website`=? ,`profilePicture`=?, `coverPicture`=? WHERE id=?";
+      const values = [
+        req.body.name,
         req.body.city,
         req.body.website,
+        req.body.profilePicture, // Chemin vers la photo de profil
         req.body.coverPicture,
-        req.body.profilePicture,
         userInfo.id
-    ],(err,data)=>{
-      if(err) res.status(500).json(err);
-      if (data.affectedRows > 0) return res.json("Updated!");
-      return res.status(403).json("You can update only your post!");
-
+      ];
+  
+      db.query(q, values, (err, data) => {
+        if (err) return res.status(500).json(err);
+        if (data.affectedRows > 0) return res.json("Mis à jour!");
+        return res.status(403).json("Vous ne pouvez mettre à jour que votre propre profil!");
+      });
     });
-    })
   };
   
