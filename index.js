@@ -18,19 +18,21 @@ app.use((req, res, next) => {
     next();
   });
 app.use(express.json());
-// app.use(
-//     cors({
-//       // origin: "http://localhost:3000",
-//       origin: ["https://cda-social-media-front-4hpaoyovx-sorayaeldjamas-projects.vercel.app/","http://localhost:3000"]
-
-//     })
-//   );
-
 app.use(
-  cors({
-    origin: "*", // Autorise toutes les origines
-  })
-);
+    cors({
+      // origin: "http://localhost:3000",
+      origin: ["https://cda-social-media-front-4hpaoyovx-sorayaeldjamas-projects.vercel.app/",
+        "http://localhost:3000"
+        ,"https://cda-social-media-front-end.vercel.app"]
+
+    })
+  );
+
+// app.use(
+//   cors({
+//     origin: "*", // Autorise toutes les origines
+//   })
+// );
 
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
