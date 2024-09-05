@@ -63,6 +63,7 @@ export const login= (req,res)=>{
         res
       .cookie("accessToken", token, {
         httpOnly: true,
+        // sameSite: 'Lax', 
       })
       .status(200)
       .json(others);
@@ -72,7 +73,7 @@ export const login= (req,res)=>{
 
 export const logout = (req, res) => {
     res.clearCookie("accessToken",{
-      secure:true,
+      secure:false,
       sameSite:"none"
     }).status(200).json("User has been logged out.")
   };

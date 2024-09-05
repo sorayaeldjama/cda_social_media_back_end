@@ -5,7 +5,7 @@ import {getAllUsersExceptCurrent} from "../controllers/users.js";
 import  {authenticateToken}from"../middlewares/authMiddleware.js"
 const router = express.Router()
 
-router.get("/find/:userId", getUser)
+router.get("/find/:userId",authenticateToken, getUser)
 router.put("/", authenticateToken, updateUser);
 router.get("/",authenticateToken,getAllUsersExceptCurrent)
 
