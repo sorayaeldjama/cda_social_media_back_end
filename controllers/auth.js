@@ -71,7 +71,10 @@ export const login = (req, res) => {
         // Envoi du token dans un cookie avec l'option `httpOnly` pour empêcher l'accès au cookie depuis le client JavaScript
         res.cookie("accessToken", token, {
             httpOnly: true, // Le cookie ne sera accessible qu'à partir du serveur
-            sameSite: "None", // Nécessaire pour autoriser les requêtes cross-origin
+            // sameSite: "None", // Nécessaire pour autoriser les requêtes cross-origin
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Cross-origin uniquement en production
+
 
         })
         .status(200) // Succès
