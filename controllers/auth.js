@@ -71,6 +71,8 @@ export const login = (req, res) => {
         // Envoi du token dans un cookie avec l'option `httpOnly` pour empêcher l'accès au cookie depuis le client JavaScript
         res.cookie("accessToken", token, {
             httpOnly: true, // Le cookie ne sera accessible qu'à partir du serveur
+            sameSite: "None", // Nécessaire pour autoriser les requêtes cross-origin
+
         })
         .status(200) // Succès
         .json(others); // Renvoyer les informations de l'utilisateur sans le mot de passe
