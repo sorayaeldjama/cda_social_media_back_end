@@ -1,19 +1,12 @@
-// import mysql from"mysql";
+import mysql from 'mysql';
+import dotenv from 'dotenv';
 
-// export const db = mysql.createConnection({
-//     host:"localhost",
-//     user:"root",
-//     password:"",
-//     database:"social_bdd"
-
-// })
-
-import mysql from"mysql";
+dotenv.config();
 
 export const db = mysql.createConnection({
-    host:"mysql-eldjama.alwaysdata.net",
-    user:"eldjama",
-    password:"6EDyf3Vt52Sa6qN",
-    database:"eldjama_social_bdd"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
+});
 
-})
