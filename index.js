@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(
     cors({
       // origin: "http://localhost:3000",
-      origin: ["https://cda-social-media-front-4hpaoyovx-sorayaeldjamas-projects.vercel.app/",
+      origin: ["https://cda-social-media-front-8iwi608a1-sorayaeldjamas-projects.vercel.app",
         "http://localhost:3000"
         ,"https://cda-social-media-front-end.vercel.app"]
 
