@@ -30,7 +30,7 @@ app.use(express.json());
 
 // app.use(
 //   cors({
-//     origin: "*", // Autorise toutes les origines
+//     origin: "http://localhost:3000", // Autorise toutes les origines
 //   })
 // );
 
