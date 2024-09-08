@@ -18,35 +18,27 @@ app.use((req, res, next) => {
     next();
   });
 app.use(express.json());
-// app.use(
-//     cors({
-//       // origin: "http://localhost:3000",
-//       origin: ["https://cda-social-media-front-8iwi608a1-sorayaeldjamas-projects.vercel.app",
-//         "http://localhost:3000"
-//         ,"https://cda-social-media-front-end.vercel.app"]
 
-//     })
-//   );
+// pour le local 
+app.use(
+  cors({
+    origin: "http://localhost:3000", 
+  })
+);
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000", // Autorise toutes les origines
-//   })
-// );
+// pour le deploiement en ligne
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (!origin || /https:\/\/.*\.vercel\.app/.test(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true
+// };
 
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || /https:\/\/.*\.vercel\.app/.test(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
-};
-
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 
   const storage = multer.diskStorage({
