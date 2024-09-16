@@ -19,26 +19,26 @@ app.use((req, res, next) => {
   });
 app.use(express.json());
 
-// pour le local 
-app.use(
-  cors({
-    origin: "http://localhost:3000", 
-  })
-);
+// En le local 
+// app.use(
+//   cors({
+//     origin: "http://localhost:3000", 
+//   })
+// );
 
 // pour le deploiement en ligne
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (!origin || /https:\/\/.*\.vercel\.app/.test(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true
-// };
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || /https:\/\/.*\.vercel\.app/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 
   const storage = multer.diskStorage({
